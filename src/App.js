@@ -1,23 +1,39 @@
 import logo from './logo.svg';
-import './App.css';
+import {useState} from "react";
 
+import Header from "./components/Header";
+import Post from "./components/Post";
+import LoginForm from "./components/LoginForm";
+import SignupForm from "./components/SignupForm";
 function App() {
+  const [showForm,setShowForm]=useState(false);
+  const [showLoginForm,setShowLoginForm]=useState(false);
+
+  const authFormToggle=(isLoginForm)=>{
+    setShowForm(!showForm);
+    setShowLoginForm(isLoginForm);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     <div className="">
+     {showForm &&
+       (<div className="w-full h-full absolute" style={{background:"rgba(0,0,0,0.3)"}}>
+          {showLoginForm ?
+            (<LoginForm />)
+          :
+           (<SignupForm />)
+          }
+        </div>)
+     }
+     </div>
+
+      <Header authFormToggle={authFormToggle}/>
+      <div style={{overflowY:"scroll",height:"77vh"}}>
+         <Post body="#React is a very cool front-end framework"  imgUrl="https://cdn-contents.anymindgroup.com/corporate/wp-uploads/2021/09/28211251/logo-og.png" userName="LawUche" />
+         <Post imgUrl="https://cdn-contents.anymindgroup.com/corporate/wp-uploads/2021/09/28211251/logo-og.png" userName="LawUche" />
+         <Post imgUrl="https://cdn-contents.anymindgroup.com/corporate/wp-uploads/2021/09/28211251/logo-og.png" userName="LawUche" />
+       </div>
     </div>
   );
 }
